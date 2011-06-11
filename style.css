@@ -1,0 +1,60 @@
+form{
+	margin: 0;
+}
+body{
+	background: #333;
+	margin: 0;
+}
+.mainWrap{
+	height: 95%;
+	width: 95%;
+	background: rgba(155,155,155, .4);
+	margin: 2%;
+	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+}
+/**** left bar *****/
+.leftbarstyle {
+	width: 150px;
+	max-height: 80%;
+	position: absolute;
+	z-index: 2;
+	background: rgba(0, 0, 0, .7);
+	top: 0;
+	left: 0;
+	margin: 10px;
+	min-height: 25px;
+	border-radius: 10px;
+	-webkit-transition: all .4s ease-in-out;
+}
+.leftbarstyle[switchstate="open"]{
+	height: 80%;
+}
+
+.rightBarStyle{
+
+}
+.topbarstyle {
+display: none;
+  position: absolute;
+  top: 0;
+	z-index: 1;
+	height: 100px;
+	width: 100%;
+	background: rgba(155,155,200, .4);
+	
+	border-top-left-radius: 10px 10px;
+	border-top-right-radius: 10px 10px;
+}
+.messageBoxStyle{
+	height: 5%;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	opacity: .5;
+	background: rgba(0,0,0,.5);
+	
+	border-bottom-right-radius: 10px 10px;
+	border-bottom-left-radius: 10px 10px;
+}
