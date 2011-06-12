@@ -24,4 +24,14 @@ else if ($_GET['action'] == "set_description")
 	$response = $box->SetDescription($_GET['folderid'], $_GET['desc']);
 	print json_encode($response);
 }
+else if ($_GET['action'] == "delete_folder")
+{
+	$response = $box->DeleteFolder($_GET['folderid']);
+	print json_encode($response);
+}
+else if ($_GET['action'] == "delete_file")
+{
+	$response = $box->DeleteFile($_GET['fileid']);
+	print json_encode($response);
+}
 ?>

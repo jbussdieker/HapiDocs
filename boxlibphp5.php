@@ -237,6 +237,32 @@ class boxclient {
     return $data;
   }
 
+	// Delete Folder
+	function DeleteFolder($folderid, $params = array()) {
+		$params['api_key']  	= $this->api_key;
+		$params['auth_token'] 	=  $this->auth_token;
+		$params['target'] = "folder";
+		$params['target_id']  	= $folderid;
+		$data = $this->makeRequest('action=delete', $params);
+		if ($this->_checkForError($data)) {
+			return false;
+		}
+		return $data;
+	}
+
+	// Delete File
+	function DeleteFile($folderid, $params = array()) {
+		$params['api_key']  	= $this->api_key;
+		$params['auth_token'] 	=  $this->auth_token;
+		$params['target'] = "file";
+		$params['target_id']  	= $folderid;
+		$data = $this->makeRequest('action=delete', $params);
+		if ($this->_checkForError($data)) {
+			return false;
+		}
+		return $data;
+	}
+	
 	// Set Description
 	function SetDescription($folderid, $desc, $params = array()) {
 		$params['api_key']  	= $this->api_key;

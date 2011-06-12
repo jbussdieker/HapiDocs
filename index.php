@@ -28,28 +28,31 @@ if ($box->isError()) {
 <link type="text/css" charset="utf-8" rel="stylesheet" href="style.css">
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="scroll.js"></script>
 <script type="text/javascript" src="toggle.js"></script>
 
 </head>
 <body onload="main()">
-  <div style="display: none;" id="hdAuthToken"><?php echo $auth_token; ?></div>
+  <div id="hdAuthToken"><?php echo $auth_token; ?></div>
 	<div class="mainWrap">
 		<div id="hdLeftBar" class="leftBarStyle" switchState="closed">
 			<div class="menuButton" onclick="hdToggleMe('hdLeftBar')">Menu</div>
-			<div class="menuItem" onclick="CreateFolder()">Create</div>
-			<div class="menuItem" onclick="EditFolder()">Edit</div>
-			<div class="menuItem" onclick="Delete()">Delete</div>
+			<div class="menuItem" onclick="CreateFolder()">Create Folder</div>
+			<div class="menuItem" onclick="CreateFolder()">Upload File</div>
 		</div>
 		<div id="hdRightBar" class="rightBarStyle">
-			<img onclick="HideImage()" id="hdImage" style="display:none">
-			<div onclick="HideFile()" id="hdFile" switchstate="closed">
+			<img onclick="HideImage()" id="hdImage" switchstate="close">
+			<div onclick="HideFile()" id="hdFile" switchstate="close">
 			</div>
 			<div id="hdTopBar" class="topBarStyle">
 			</div>
-			<div id="hdMainContent" style="width:100%; height:100%;" class="mainContentStyle">
+			<div id="hdMainContent" class="mainContentStyle">
 			</div>
 		</div>
-		<div id="hdMessageBox" class="messageBoxStyle" switchstate="closed"></div>
+		<div id="hdMessageBox" class="messageBoxStyle" switchstate="closed">
+			<div id="hdFileList" class="scrollable vertical fileList"></div>
+			<!--<iframe id="hdEditIframe" onclick="HideEdit()" onload="changeURL();" switchState="closed"></iframe>!-->
+	</div>
 	</div>
 </body>
 </html>
