@@ -1,9 +1,25 @@
 var map;
-var markersArray;
+var markersArray = [];
+var curlng;
+var curlat;
 
 function CreateFolder()
 {
-	alert("Create Folder");
+	var fn = prompt("Enter folder name.");
+  xhr = new XMLHttpRequest();
+  xhr.open("GET", "box.php?action=create_folder&foldername=" + fn + "&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
+  xhr.send();
+	var response = JSON.parse(xhr.responseText);
+	for (var i in response)
+	{
+		if (response[i].tag == "FOLDER_ID")
+		{
+			xhr.open("GET", "box.php?action=set_description&folderid=" + response[i].value + "&desc=" + curlng + "," + curlat + "&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
+			xhr.send();
+			var response2 = JSON.parse(xhr.responseText);
+		}
+	}
+	PlotFolders();
 }
 
 function ListView()
@@ -16,11 +32,21 @@ function Delete()
 	alert("Delete");
 }
 
-function getdatatest()
+function clearOverlays() {
+	if (markersArray) {
+		for (i in markersArray) {
+			markersArray[i].setMap(null);
+		}
+	}
+}
+
+// Place markers on map to represent folders
+function PlotFolders()
 {
-  //alert("starting get data test");
+	clearOverlays();
+	
   xhr = new XMLHttpRequest();
-  xhr.open("GET", "box.php?auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
+  xhr.open("GET", "box.php?action=get_account_tree&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
   xhr.send();
   
   var folders = JSON.parse(xhr.responseText);
@@ -69,21 +95,24 @@ function initialize()
 	  	disableDefaultUI: true
 	  	}
 	  );
-	getdatatest();
+		
+	PlotFolders();
 }
 
-function panMap(latitude, longitude)
+function panMap()
 {
   google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
     window.setTimeout(function() {
-      map.panTo(new google.maps.LatLng(latitude, longitude));
+      map.panTo(new google.maps.LatLng(curlat, curlng));
     }, 1000);
   });
 }
 
 function positionCallback(position)
 {
-	panMap(position.coords.latitude, position.coords.longitude);
+	curlng = position.coords.longitude;
+	curlat = position.coords.latitude;
+	panMap();
 }
 
 function errorCallback(error)

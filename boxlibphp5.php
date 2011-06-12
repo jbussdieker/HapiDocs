@@ -237,6 +237,20 @@ class boxclient {
     return $data;
   }
 
+	// Set Description
+	function SetDescription($folderid, $desc, $params = array()) {
+		$params['api_key']  	= $this->api_key;
+		$params['auth_token'] 	=  $this->auth_token;
+		$params['target'] = "folder";
+		$params['target_id']  	= $folderid;
+		$params['description'] 	=  $desc;
+		$data = $this->makeRequest('action=set_description', $params);
+		if ($this->_checkForError($data)) {
+			return false;
+		}
+		return $data;
+	}
+
 	// Create New Folder
 	function CreateFolder($new_folder_name, $params = array()) {
 		$params['api_key']  	= $this->api_key;
@@ -251,7 +265,7 @@ class boxclient {
 			return false;
 		}
 
-		foreach ($data as $a) {
+		/*foreach ($data as $a) {
 			switch ($a['tag']) {
 			  case 'FOLDER_ID':
           $ret_array['folder_id'] = $a['value'];
@@ -266,7 +280,7 @@ class boxclient {
 				  $ret_array['password'] = $a['value'];
 					break;
 			}
-    }
+    }*/
 
     if ($this->_debug) {
 			echo '<h2>Account Tree Return</h2>';
@@ -276,7 +290,7 @@ class boxclient {
 			echo '<hr />';
 		}
 
-		return $ret_array;
+		return $data;
 	}
 	
 	// Upload File 
