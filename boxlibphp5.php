@@ -185,10 +185,10 @@ class boxclient {
   }
     
   // Retrieve Account Tree (http://enabled.box.net/docs/rest#get_account_tree)
-  function getAccountTree($params = array()) {    
+  function getAccountTree($folderid = 0, $params = array()) {    
     $params['api_key']  = $this->api_key;
     $params['auth_token']   = $this->auth_token;
-    $params['folder_id']    = 0;
+    $params['folder_id']    = $folderid;
     $params['params[]']     = 'nozip';
     $ret_array = array();
     $data = $this->makeRequest('action=get_account_tree', $params);

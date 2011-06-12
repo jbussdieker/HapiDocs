@@ -2,6 +2,7 @@ var map;
 var markersArray = [];
 var curlng;
 var curlat;
+var infowindow;
 
 function CreateFolder()
 {
@@ -22,9 +23,9 @@ function CreateFolder()
 	PlotFolders();
 }
 
-function ListView()
+function EditFolder()
 {
-	alert("List View");
+	alert("Edit");
 }
 
 function Delete()
@@ -38,6 +39,47 @@ function clearOverlays() {
 			markersArray[i].setMap(null);
 		}
 	}
+}
+
+function ShowFolder(elem)
+{
+  xhr = new XMLHttpRequest();
+  xhr.open("GET", "box.php?action=get_account_tree&folderid=" + elem.id + "&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
+  xhr.send();
+  
+  var folders = JSON.parse(xhr.responseText);
+	var str = "";
+	var firstfolder = true;
+	
+  for (var i in folders)
+	{
+    if (folders[i].tag == "FOLDER")
+    {
+      if (folders[i].type == "open")
+      {
+				if (firstfolder == true)
+				{
+					str = str + "<div class='hd_showheader'>" + folders[i].attributes.NAME + "</div>";
+					firstfolder = false;
+				}
+				else
+					str = str + "<div class='hd_folderitem' id='" + folders[i].attributes.ID + "' onclick='ShowFolder(this)'>" + folders[i].attributes.NAME + "</div>";
+			}
+		}
+		else if (folders[i].tag == "FILE")
+		{
+			if (folders[i].type == "open")
+			{
+				//alert(folders[i].attributes);
+				str = str + "<a class='hd_fileitem' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>" + folders[i].attributes.FILE_NAME + "</a>";
+				
+				//str = str + "<div id='" + folders[i].attributes.ID + "' onclick='ShowFile(this)'>" + folders[i].attributes.NAME + "</div>";				
+			}
+		}
+	}
+
+	document.getElementById("hdMessageBox").innerHTML = str;
+	document.getElementById("hdMessageBox").setAttribute('switchState','open');
 }
 
 // Place markers on map to represent folders
@@ -63,11 +105,10 @@ function PlotFolders()
         //console.log(folders[i]);
         if (curfile.DESCRIPTION != "")
         {
-          
           var gpspos = curfile.DESCRIPTION;
-          
+          var titletxt = "<div id='" + curfile.ID + "' class='hd_maplink' onclick='ShowFolder(this)'>Open Folder</div>" + curfile.NAME + "<br>Files: " + curfile.FILE_COUNT;
 					var latLng = new google.maps.LatLng(gpspos.split(",")[1], gpspos.split(",")[0]);
-					marker = new google.maps.Marker({title: curfile.NAME + "<br>Files: " + curfile.FILE_COUNT, position: latLng, map: map});
+					marker = new google.maps.Marker({title: titletxt, position: latLng, map: map});
 					google.maps.event.addListener(marker, 'click', function(event)
 					  {
 					    infowindow.content = this.title;
@@ -96,6 +137,13 @@ function initialize()
 	  	}
 	  );
 		
+	google.maps.event.addListener(map, 'click', function() {
+			infowindow.close();
+			document.getElementById("hdMessageBox").innerHTML = "";
+			document.getElementById("hdMessageBox").setAttribute('switchState','close');
+			}
+		);
+
 	PlotFolders();
 }
 

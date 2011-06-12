@@ -37,7 +37,7 @@ if ($box->isError()) {
 		<div id="hdLeftBar" class="leftBarStyle" switchState="closed">
 			<div class="menuButton" onclick="hdToggleMe('hdLeftBar')">Menu</div>
 			<div class="menuItem" onclick="CreateFolder()">Create</div>
-			<div class="menuItem" onclick="ListView()">List View</div>
+			<div class="menuItem" onclick="EditFolder()">Edit</div>
 			<div class="menuItem" onclick="Delete()">Delete</div>
 		</div>
 		<div id="hdRightBar" class="rightBarStyle">
@@ -45,7 +45,7 @@ if ($box->isError()) {
 			</div>
 			<div id="hdMainContent" style="width:100%; height:100%;" class="mainContentStyle"></div>
 		</div>
-		<div id="hdMessageBox" class="messageBoxStyle"></div>
+		<div id="hdMessageBox" class="messageBoxStyle" switchstate="closed"></div>
 	</div>
 </body>
 </html>

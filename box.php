@@ -8,7 +8,10 @@ $box = new boxclient($api_key, $auth_token);
 
 if ($_GET['action'] == "get_account_tree")
 {
-	$foldertree = $box->getAccountTree();
+	if (isset($_GET['folderid']))
+		$foldertree = $box->getAccountTree($_GET['folderid']);
+	else
+		$foldertree = $box->getAccountTree();
 	print json_encode($foldertree);
 }
 else if ($_GET['action'] == "create_folder")
