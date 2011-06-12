@@ -70,6 +70,7 @@ function ShowFolder(elem)
 		{
 			if (folders[i].type == "open")
 			{
+				// Create links for the files
 				str = str + "<a target='_blank' class='hd_firstfileitem hd_fileitem2' href='https://www.box.net/api/1.0/download/" + document.getElementById('hdAuthToken').innerHTML + "/" + folders[i].attributes.ID + "'>View</a>";
 				str = str + "<a target='_blank' class='hd_fileitem2' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>Edit</a>";
 				str = str + "<a class='hd_fileitem'>" + folders[i].attributes.FILE_NAME + "</a>";
@@ -77,6 +78,7 @@ function ShowFolder(elem)
 		}
 	}
 
+	// Update the console div
 	document.getElementById("hdMessageBox").innerHTML = str;
 	document.getElementById("hdMessageBox").setAttribute('switchState','open');
 }
@@ -84,55 +86,57 @@ function ShowFolder(elem)
 // Place markers on map to represent folders
 function PlotFolders()
 {
+	// Clear all existing markers
 	clearOverlays();
 	
+	// Send request for the file tree
   xhr = new XMLHttpRequest();
   xhr.open("GET", "box.php?action=get_account_tree&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
   xhr.send();
-  
   var folders = JSON.parse(xhr.responseText);
   
+	// Create the one and only reusable marker tooltip
   infowindow = new google.maps.InfoWindow({content: '', size: new google.maps.Size(100,100)});
-  for (var i in folders)
+  
+	// Parse the file system
+	for (var i in folders)
   {
-		if (folders[i].tag == "STATUS")
+		// Detect login timeout
+		if (folders[i].tag == "STATUS" && folders[i].value != "listing_ok")
+			window.location = "http://192.168.1.5/hapidocs/";
+
+		// Look for opening folder tags
+		if (folders[i].tag == "FOLDER" && folders[i].type == "open")
 		{
-			if (folders[i].value != "listing_ok")
+			// Get the folder object
+			var curfile = folders[i].attributes;
+			
+			// Make sure folder has description field set
+			if (curfile.DESCRIPTION != "")
 			{
-				//alert("not logged in");
-				window.location = "http://192.168.1.5/hapidocs/";
+				// Grap the GPS coordinates from the description field
+				var gpspos = curfile.DESCRIPTION;
+				
+				// Create a map marker with infowindow text
+				var titletxt = curfile.NAME + "<br>Files: " + curfile.FILE_COUNT + "<br><div id='" + curfile.ID + "' class='hd_maplink' onclick='ShowFolder(this)'>Open Folder</div>";
+				var latLng = new google.maps.LatLng(gpspos.split(",")[1], gpspos.split(",")[0]);
+				marker = new google.maps.Marker({title: titletxt, position: latLng, map: map});
+				google.maps.event.addListener(marker, 'click', function(event)
+					{
+						infowindow.content = this.title;
+						infowindow.open(map, this);
+						this.setZIndex(-1);
+					});
+
+				// Add marker to the array to keep track of them	
+				markersArray.push(marker);
 			}
 		}
-    if (folders[i].tag == "FOLDER")
-    {
-      if (folders[i].type == "open")
-      {
-        var curfile = folders[i].attributes;
-        
-        //console.log(folders[i]);
-        if (curfile.DESCRIPTION != "")
-        {
-          var gpspos = curfile.DESCRIPTION;
-          var titletxt = curfile.NAME + "<br>Files: " + curfile.FILE_COUNT + "<br><div id='" + curfile.ID + "' class='hd_maplink' onclick='ShowFolder(this)'>Open Folder</div>";
-					var latLng = new google.maps.LatLng(gpspos.split(",")[1], gpspos.split(",")[0]);
-					marker = new google.maps.Marker({title: titletxt, position: latLng, map: map});
-					google.maps.event.addListener(marker, 'click', function(event)
-					  {
-					    infowindow.content = this.title;
-					    infowindow.open(map, this);
-					    this.setZIndex(-1);
-				    });
-
-						markersArray.push(marker);
-          //alert(gpspos.split(",")[0] + "qwerty" + gpspos.split(",")[1]);          
-
-					}
-      }
-    }
   }
 }
 
-function initialize()
+// Setup google maps in the main content div
+function CreateMap()
 {
   var mapDiv = document.getElementById('hdMainContent');
   map = new google.maps.Map(
