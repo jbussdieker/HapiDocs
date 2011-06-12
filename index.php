@@ -18,7 +18,7 @@ if ($box->isError()) {
 <html>
 <head>
 <title>
-	hapiDoc
+	hapiDocs
 </title>
 
 
