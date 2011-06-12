@@ -4,6 +4,51 @@ var curlng;
 var curlat;
 var infowindow;
 
+function HideImage(elem)
+{
+	var img=document.getElementById("hdImage");
+	img.style.display="none";
+}
+
+function DisplayImage(elem)
+{
+	//infowindow.close();
+	//document.getElementById("hdMessageBox").innerHTML = "";
+	//document.getElementById("hdMessageBox").setAttribute('switchState','close');
+	var fileid=elem.id;
+	var img=document.getElementById("hdImage");
+	img.src="https://www.box.net/api/1.0/download/" + document.getElementById('hdAuthToken').innerHTML + "/" + fileid;
+	img.style.display="";
+	img.style.width="100%";
+	img.style.height="100%";
+}
+
+function HideFile()
+{
+	var filediv=document.getElementById("hdFile");
+	//filediv.style.display="none";
+	filediv.setAttribute('switchState','close');
+}
+
+function DisplayFile(elem)
+{
+	var fileid=elem.id;
+	var filediv=document.getElementById("hdFile");
+
+  xhr = new XMLHttpRequest();
+  xhr.open("POST", "getdoc.php?auth_token=" + document.getElementById('hdAuthToken').innerHTML + "&fileid=" + fileid, false);
+  xhr.send();
+	filediv.innerHTML = xhr.responseText;
+	//filediv.style.display="";
+	//filediv.style.position="absolute";
+	//filediv.style.top="50px";
+	//filediv.style.left="50px";
+	//filediv.style.width="150px";
+	//filediv.style.height="150px";
+	filediv.style.padding="45px 0px 0px 10px";
+	filediv.setAttribute('switchState','open');
+}
+
 function CreateFolder()
 {
 	var fn = prompt("Enter folder name.");
@@ -49,30 +94,55 @@ function ShowFolder(elem)
   
   var folders = JSON.parse(xhr.responseText);
 	var str = "";
-	var firstfolder = true;
+	var level = 0;
+	var infolder = true;
 	
   for (var i in folders)
 	{
     if (folders[i].tag == "FOLDER")
     {
-      if (folders[i].type == "open")
+
+			if (folders[i].type == "open")
       {
-				if (firstfolder == true)
+				if (folders[i].attributes.ID == elem.id)
 				{
 					str = str + "<div class='hd_showheader'>" + folders[i].attributes.NAME + "</div>";
-					firstfolder = false;
+					level = 0;
+					infolder = true;
 				}
 				else
+				{
 					str = str + "<div class='hd_folderitem' id='" + folders[i].attributes.ID + "' onclick='ShowFolder(this)'>" + folders[i].attributes.NAME + "</div>";
+					level++;
+					//alert(level);
+					infolder = false;
+				}
+			}
+			else if (folders[i].type == "close")
+			{
+				level--;
+				if (level == 0)
+					infolder = true;
 			}
 		}
 		else if (folders[i].tag == "FILE")
 		{
-			if (folders[i].type == "open")
+			if (folders[i].type == "open" && infolder == true)
 			{
+				var fileext = String("test");
+				fileext = (/[^.]+$/.exec(folders[i].attributes.FILE_NAME)).toString();
+
 				// Create links for the files
-				str = str + "<a target='_blank' class='hd_firstfileitem hd_fileitem2' href='https://www.box.net/api/1.0/download/" + document.getElementById('hdAuthToken').innerHTML + "/" + folders[i].attributes.ID + "'>View</a>";
+				if (fileext.toLowerCase() == "jpg")
+					str = str + "<div id='" + folders[i].attributes.ID + "' class='hd_firstfileitem hd_fileitem2' onclick='DisplayImage(this)'>View</div>";
+				else
+					str = str + "<div id='" + folders[i].attributes.ID + "' class='hd_firstfileitem hd_fileitem2' onclick='DisplayFile(this)'>View</div>";
+
+//					str = str + "<a target='_blank' class='hd_firstfileitem hd_fileitem2' href='https://www.box.net/api/1.0/download/" + document.getElementById('hdAuthToken').innerHTML + "/" + folders[i].attributes.ID + "'>View</a>";
+				
 				str = str + "<a target='_blank' class='hd_fileitem2' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>Edit</a>";
+				
+				
 				str = str + "<a class='hd_fileitem'>" + folders[i].attributes.FILE_NAME + "</a>";
 			}
 		}

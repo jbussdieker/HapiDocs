@@ -41,9 +41,13 @@ if ($box->isError()) {
 			<div class="menuItem" onclick="Delete()">Delete</div>
 		</div>
 		<div id="hdRightBar" class="rightBarStyle">
+			<img onclick="HideImage()" id="hdImage" style="display:none">
+			<div onclick="HideFile()" id="hdFile" switchstate="closed">
+			</div>
 			<div id="hdTopBar" class="topBarStyle">
 			</div>
-			<div id="hdMainContent" style="width:100%; height:100%;" class="mainContentStyle"></div>
+			<div id="hdMainContent" style="width:100%; height:100%;" class="mainContentStyle">
+			</div>
 		</div>
 		<div id="hdMessageBox" class="messageBoxStyle" switchstate="closed"></div>
 	</div>
