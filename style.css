@@ -9,18 +9,7 @@ body{
 #hdAuthToken{
 	display: none;	
 }
-#hdEditIframe[switchState="open"]{
-	display:block;
-}
-#hdEditIframe{
-	position: absolute;
-	top: 0;
-	left: 0;
-	border: 0;
-	width: 100%;
-	height: 100%;
-	display: none;
-}
+
 .mainWrap{
 	height: 92%;
 	width: 95%;
@@ -107,7 +96,7 @@ body{
 	-webkit-transition: all .4s ease-in-out;
 }
 .leftbarstyle[switchstate="open"]{
-	height: 200px;
+	height: 100px;
 }
 
 #hdFile,#hdImage {
@@ -133,33 +122,29 @@ body{
 	opacity: 1;
 }
 
-.topbarstyle {
-	display: none;
-//  position: absolute;
-	position: relative;
-  top: 0;
-	z-index: 1;
-	height: 100px;
-	width: 100%;
-	background: rgba(155,155,200, .8);
-	border-top-left-radius: 10px 10px;
-	border-top-right-radius: 10px 10px;
+.messageBoxStyle[switchstate="close"]{
+	top: 100%;
+	height: 0%;
+	opacity: 0;
 }
 
-.messageBoxStyle[switchstate="closed"]{
-	bottom: -133%;
+.messageBoxStyle[switchstate="open"]{
+	top: 68%;
+	height: 33%;
+	opacity: 1;
 }
 
 .messageBoxStyle{
 	overflow: hidden;
+//	position: relative;
+	position: absolute;
+	//top: -33%;
 	height: 33%;
-	position: relative;
-//	position: absolute;
-	bottom: 33%;
 	width: 100%;
 	background: rgba(0,0,0,.5);
-	padding: 5px;
+	//padding: 5px;
 	-webkit-transition: all .4s ease-in-out;
+	overflow-y: scroll;
 }
 
 .markerTitle{

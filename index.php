@@ -35,23 +35,20 @@ if ($box->isError()) {
 <body onload="main()">
   <div id="hdAuthToken"><?php echo $auth_token; ?></div>
 	<div class="mainWrap">
-		<div id="hdLeftBar" class="leftBarStyle" switchState="closed">
+		<div id="hdLeftBar" class="leftBarStyle" switchstate="closed">
 			<div class="menuButton" onclick="hdToggleMe('hdLeftBar')">Menu</div>
-			<div class="menuItem" onclick="CreateFolder()">Create Folder</div>
-			<div class="menuItem" onclick="CreateFolder()">Upload File</div>
+			<div class="menuItem" onclick="CreateFolder()">New Folder</div>
 		</div>
 		<div id="hdRightBar" class="rightBarStyle">
 			<img onclick="HideImage()" id="hdImage" switchstate="close">
 			<div onclick="HideFile()" id="hdFile" switchstate="close">
-			</div>
-			<div id="hdTopBar" class="topBarStyle">
+				<div id="hdFileBody" class="scrollable vertical fileList"></div>
 			</div>
 			<div id="hdMainContent" class="mainContentStyle">
 			</div>
 		</div>
-		<div id="hdMessageBox" class="messageBoxStyle" switchstate="closed">
+		<div id="hdMessageBox" class="messageBoxStyle" switchstate="close">
 			<div id="hdFileList" class="scrollable vertical fileList"></div>
-			<!--<iframe id="hdEditIframe" onclick="HideEdit()" onload="changeURL();" switchState="closed"></iframe>!-->
 	</div>
 	</div>
 </body>

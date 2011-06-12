@@ -51,7 +51,7 @@ function EditFile(elem)
 function DisplayFile(elem)
 {
 	var fileid=elem.id;
-	var filediv=document.getElementById("hdFile");
+	var filediv=document.getElementById("hdFileBody");
 
   xhr = new XMLHttpRequest();
   xhr.open("POST", "getdoc.php?auth_token=" + document.getElementById('hdAuthToken').innerHTML + "&fileid=" + fileid, false);
@@ -63,8 +63,8 @@ function DisplayFile(elem)
 	//filediv.style.left="50px";
 	//filediv.style.width="150px";
 	//filediv.style.height="150px";
-	filediv.style.padding="45px 0px 0px 10px";
-	filediv.setAttribute('switchState','open');
+	//filediv.style.padding="45px 0px 0px 10px";
+	document.getElementById("hdFile").setAttribute('switchState','open');
 	//document.getElementById("hdLeftBar").style.display = "none";
 }
 
@@ -130,17 +130,17 @@ function clearOverlays() {
 
 function MarkerShowFolder(elem)
 {
-	if (elem.innerHTML == "Open")
-	{
+	//if (elem.innerHTML == "Open")
+	//{
 		ShowFolder(elem);
-		document.getElementById("hdMessageBox").setAttribute('switchState','open');
-		elem.innerHTML = "Close";
-	}
+		document.getElementById("hdMessageBox").setAttribute('switchstate','open');
+//		elem.innerHTML = "Close";
+/*	}
 	else
 	{
-		document.getElementById("hdMessageBox").setAttribute('switchState','closed');
+		document.getElementById("hdMessageBox").setAttribute('switchstate','close');
 		elem.innerHTML = "Open";
-	}
+	}*/
 }
 
 function ShowFolder(elem)
@@ -161,7 +161,7 @@ function ShowFolder(elem)
 	{
 		// Detect login timeout
 		if (folders[i].tag == "STATUS" && folders[i].value != "listing_ok")
-			window.location = "http://192.168.1.5/hapidocs/";
+			window.location = "http://fcsak.com/hapidocs/";
 
 		if (folders[i].tag == "FOLDER")
     {
@@ -225,7 +225,7 @@ function ShowFolder(elem)
 
 	// Update the console div
 	document.getElementById("hdFileList").innerHTML = str;
-	//document.getElementById("hdMessageBox").setAttribute('switchState','open');
+	//document.getElementById("hdMessageBox").setAttribute('switchstate','open');
 }
 
 // Place markers on map to represent folders
@@ -248,7 +248,7 @@ function PlotFolders()
   {
 		// Detect login timeout
 		if (folders[i].tag == "STATUS" && folders[i].value != "listing_ok")
-			window.location = "http://192.168.1.5/hapidocs/";
+			window.location = "http://fcsak.com/hapidocs/";
 
 		// Look for opening folder tags
 		if (folders[i].tag == "FOLDER" && folders[i].type == "open")
@@ -297,7 +297,7 @@ function CreateMap()
 		
 	google.maps.event.addListener(map, 'click', function() {
 			infowindow.close();
-			document.getElementById("hdMessageBox").setAttribute('switchState','closed');
+			document.getElementById("hdMessageBox").setAttribute('switchstate','close');
 //			document.getElementById("hdFileList").innerHTML = "";
 			}
 		);
