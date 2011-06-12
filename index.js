@@ -30,6 +30,13 @@ function HideFile()
 	filediv.setAttribute('switchState','close');
 }
 
+function EditFile(elem)
+{
+	var fileid=elem.id;
+	var editframe=document.getElementById("hdEditIframe");
+	editframe.src = "http://www.box.net/services/web_documents/105/" + fileid + "/004a4e/Test_Document";
+}
+
 function DisplayFile(elem)
 {
 	var fileid=elem.id;
@@ -140,7 +147,8 @@ function ShowFolder(elem)
 
 //					str = str + "<a target='_blank' class='hd_firstfileitem hd_fileitem2' href='https://www.box.net/api/1.0/download/" + document.getElementById('hdAuthToken').innerHTML + "/" + folders[i].attributes.ID + "'>View</a>";
 				
-				str = str + "<a target='_blank' class='hd_fileitem2' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>Edit</a>";
+				str = str + "<div id='" + folders[i].attributes.ID + "' class='hd_fileitem2' onclick='EditFile(this)'>Edit</div>";
+				//str = str + "<a target='_blank' class='hd_fileitem2' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>Edit</a>";
 				
 				
 				str = str + "<a class='hd_fileitem'>" + folders[i].attributes.FILE_NAME + "</a>";
@@ -149,8 +157,8 @@ function ShowFolder(elem)
 	}
 
 	// Update the console div
-	document.getElementById("hdMessageBox").innerHTML = str;
-	document.getElementById("hdMessageBox").setAttribute('switchState','open');
+	document.getElementById("hdFileList").innerHTML = str;
+	document.getElementById("hdFileList").setAttribute('switchState','open');
 }
 
 // Place markers on map to represent folders
@@ -220,8 +228,8 @@ function CreateMap()
 		
 	google.maps.event.addListener(map, 'click', function() {
 			infowindow.close();
-			document.getElementById("hdMessageBox").innerHTML = "";
-			document.getElementById("hdMessageBox").setAttribute('switchState','close');
+			document.getElementById("hdFileList").innerHTML = "";
+			document.getElementById("hdFileList").setAttribute('switchState','close');
 			}
 		);
 
