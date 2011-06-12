@@ -70,8 +70,9 @@ function ShowFolder(elem)
 		{
 			if (folders[i].type == "open")
 			{
-				str = str + "<a class='hd_fileitem' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>" + folders[i].attributes.FILE_NAME + "</a>";
-				//str = str + "<a class='hd_fileitem' href='http://www.box.net/files#/files/0/f/90843026/1/f_" + folders[i].attributes.ID + "'>" + folders[i].attributes.FILE_NAME + "</a>";
+				str = str + "<a target='_blank' class='hd_firstfileitem hd_fileitem2' href='https://www.box.net/api/1.0/download/" + document.getElementById('hdAuthToken').innerHTML + "/" + folders[i].attributes.ID + "'>View</a>";
+				str = str + "<a target='_blank' class='hd_fileitem2' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>Edit</a>";
+				str = str + "<a class='hd_fileitem'>" + folders[i].attributes.FILE_NAME + "</a>";
 			}
 		}
 	}
@@ -112,7 +113,7 @@ function PlotFolders()
         if (curfile.DESCRIPTION != "")
         {
           var gpspos = curfile.DESCRIPTION;
-          var titletxt = "<div id='" + curfile.ID + "' class='hd_maplink' onclick='ShowFolder(this)'>Open Folder</div>" + curfile.NAME + "<br>Files: " + curfile.FILE_COUNT;
+          var titletxt = curfile.NAME + "<br>Files: " + curfile.FILE_COUNT + "<br><div id='" + curfile.ID + "' class='hd_maplink' onclick='ShowFolder(this)'>Open Folder</div>";
 					var latLng = new google.maps.LatLng(gpspos.split(",")[1], gpspos.split(",")[0]);
 					marker = new google.maps.Marker({title: titletxt, position: latLng, map: map});
 					google.maps.event.addListener(marker, 'click', function(event)
