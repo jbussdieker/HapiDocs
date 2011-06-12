@@ -183,5 +183,5 @@ function main()
 {
 	// Start monitoring the GPS reading
 	navigator.geolocation.watchPosition(positionCallback, errorCallback, {enableHighAccuracy:true});
-	initialize();
+	CreateMap();
 }
