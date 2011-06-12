@@ -14,8 +14,32 @@ body{
 	border-radius: 10px;
 	overflow: hidden;
 }
+.menuItem {
+	background: rgba(0, 0, 0, .7);
+	opacity: .5;
+	color: white;
+	display: block;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+}
+.menuButton {
+	background: rgba(0, 0, 0, .7);
+	opacity: .5;
+	color: white;
+	display: block;
+	border-radius: 10px;
+	padding: 10px;
+	overflow: hidden;
+}
+
+.leftbarstyle[switchstate="closed"]>.menuItem {
+	display: none;
+}
+
 /**** left bar *****/
 .leftbarstyle {
+	overflow: hidden;
 	width: 150px;
 	max-height: 80%;
 	position: absolute;
@@ -24,12 +48,12 @@ body{
 	top: 0;
 	left: 0;
 	margin: 10px;
-	min-height: 25px;
+	min-height: 40px;
 	border-radius: 10px;
 	-webkit-transition: all .4s ease-in-out;
 }
 .leftbarstyle[switchstate="open"]{
-	height: 80%;
+	height: 200px;
 }
 
 .rightBarStyle{
