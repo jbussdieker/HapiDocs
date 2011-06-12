@@ -70,10 +70,8 @@ function ShowFolder(elem)
 		{
 			if (folders[i].type == "open")
 			{
-				//alert(folders[i].attributes);
 				str = str + "<a class='hd_fileitem' href='http://www.box.net/services/web_documents/105/" + folders[i].attributes.ID + "/004a4e/Test_Document'>" + folders[i].attributes.FILE_NAME + "</a>";
-				
-				//str = str + "<div id='" + folders[i].attributes.ID + "' onclick='ShowFile(this)'>" + folders[i].attributes.NAME + "</div>";				
+				//str = str + "<a class='hd_fileitem' href='http://www.box.net/files#/files/0/f/90843026/1/f_" + folders[i].attributes.ID + "'>" + folders[i].attributes.FILE_NAME + "</a>";
 			}
 		}
 	}
@@ -96,6 +94,14 @@ function PlotFolders()
   infowindow = new google.maps.InfoWindow({content: '', size: new google.maps.Size(100,100)});
   for (var i in folders)
   {
+		if (folders[i].tag == "STATUS")
+		{
+			if (folders[i].value != "listing_ok")
+			{
+				//alert("not logged in");
+				window.location = "http://192.168.1.5/hapidocs/";
+			}
+		}
     if (folders[i].tag == "FOLDER")
     {
       if (folders[i].type == "open")
