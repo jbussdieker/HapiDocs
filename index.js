@@ -3,6 +3,7 @@ var markersArray = [];
 var curlng;
 var curlat;
 var infowindow;
+var folders;
 
 function HideImage(elem)
 {
@@ -115,12 +116,12 @@ function MarkerShowFolder(elem)
 
 function ShowFolder(elem)
 {
-  xhr = new XMLHttpRequest();
+  //xhr = new XMLHttpRequest();
 	//  xhr.open("GET", "box.php?action=get_account_tree&folderid=" + elem.id + "&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
-  xhr.open("GET", "box.php?action=get_account_tree&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
-  xhr.send();
+  //xhr.open("GET", "box.php?action=get_account_tree&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
+  //xhr.send();
   
-  var folders = JSON.parse(xhr.responseText);
+  //var folders = JSON.parse(xhr.responseText);
 	var str = "";
 	var level = 0;
 	var infolder = false;
@@ -197,7 +198,7 @@ function PlotFolders()
   xhr = new XMLHttpRequest();
   xhr.open("GET", "box.php?action=get_account_tree&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
   xhr.send();
-  var folders = JSON.parse(xhr.responseText);
+  folders = JSON.parse(xhr.responseText);
   
 	// Create the one and only reusable marker tooltip
   infowindow = new google.maps.InfoWindow({content: '', size: new google.maps.Size(1,1)});
