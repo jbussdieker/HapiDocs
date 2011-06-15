@@ -33,7 +33,7 @@ class boxclient {
   // Setup for Functions
   function makeRequest($method, $params = array()) {
     $this->_clearErrors();
-    $useCURL = in_array('curl', get_loaded_extensions());
+    //$useCURL = in_array('curl', get_loaded_extensions());
 
     if ($method == 'upload'){
       $args = array();
@@ -65,7 +65,7 @@ class boxclient {
       }
     }
 
-    if ($useCURL) {
+    /*if ($useCURL) {
         $c = new curl($request );
         $c->setopt(CURLOPT_FOLLOWLOCATION, true);
         $xml = $c->exec();
@@ -75,7 +75,7 @@ class boxclient {
             return false;
         }
         $c->close() ;
-    } else {
+    } else {*/
       $url_parsed = parse_url($request);
       //print_r($url_parsed);
       $host       = $url_parsed["host"];
@@ -105,7 +105,7 @@ class boxclient {
           $xml_start = strpos($xml, '<?xml');
           $xml = substr($xml, $xml_start, strlen($xml));
       }
-    }
+    //}
         
     if ($this->_debug) {
         echo '<h2>XML Response</h2>';
