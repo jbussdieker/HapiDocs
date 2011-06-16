@@ -282,6 +282,19 @@ function errorCallback(error)
 {
 }
 
+function hdToggleMe(switchID){
+	//console.log('ive been clicked');
+	var me = document.getElementById(switchID);
+
+	if(me.getAttribute('switchState') == 'closed'){
+		me.setAttribute('switchState','open');
+	}else if(me.getAttribute('switchState') === null){
+		me.setAttribute('switchState','closed');
+	}else{
+		me.setAttribute('switchState','closed');
+	}
+}
+
 // This function is called by body onload event
 function main()
 {
