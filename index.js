@@ -116,12 +116,6 @@ function MarkerShowFolder(elem)
 
 function ShowFolder(elem)
 {
-  //xhr = new XMLHttpRequest();
-	//  xhr.open("GET", "box.php?action=get_account_tree&folderid=" + elem.id + "&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
-  //xhr.open("GET", "box.php?action=get_account_tree&auth_token=" + document.getElementById('hdAuthToken').innerHTML, false);
-  //xhr.send();
-  
-  //var folders = JSON.parse(xhr.responseText);
 	var str = "";
 	var level = 0;
 	var infolder = false;
@@ -130,10 +124,6 @@ function ShowFolder(elem)
 	
   for (var i in folders)
 	{
-		// Detect login timeout
-		if (folders[i].tag == "STATUS" && folders[i].value != "listing_ok")
-			window.location = "http://fcsak.com/hapidocs/";
-
 		if (folders[i].tag == "FOLDER")
     {
 			if (folders[i].type == "open")
@@ -208,7 +198,7 @@ function PlotFolders()
   {
 		// Detect login timeout
 		if (folders[i].tag == "STATUS" && folders[i].value != "listing_ok")
-			window.location = "http://fcsak.com/hapidocs/";
+			window.location = "http://hapidocs.koolaidbandit.com";
 
 		// Look for opening folder tags
 		if (folders[i].tag == "FOLDER" && folders[i].type == "open")

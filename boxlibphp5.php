@@ -180,7 +180,8 @@ class boxclient {
       $auth_token = $ret_array['auth_token'];
       global $auth_token;
     } else {
-      header ('location: http://www.box.net/api/1.0/auth/'.$ticket);
+      //header ('location: http://www.box.net/api/1.0/auth/'.$ticket);
+			echo "<script>window.location = 'http://www.box.net/api/1.0/auth/" . $ticket . "';</script>";
     }   
   }
     
